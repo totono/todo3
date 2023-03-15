@@ -4,13 +4,16 @@ import { taskCommand } from "../../../ipcs";
 import { AiOutlinePlusCircle } from "react-icons/ai"
 import { InputDateTime } from "./InputDatetime";
 import { ChangeEventHandler, useState, } from "react";
-import { TimePicker,DatePicker } from "antd";
+import { TimePicker,DatePicker,Input,Checkbox } from "antd";
 import 'dayjs/locale/ja';
 import dayjs, { Dayjs } from "dayjs";
 
 type InputProps = {
-    setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
+    fetch : number;
+    setFetch: React.Dispatch<React.SetStateAction<number>>;
 }
+
+const { TextArea } = Input;
 
 const today = () => {
     const today = new Date();
@@ -38,16 +41,9 @@ const formStyle = css`
   }
 `
 
-const textArea = css`
-  margin: 5px;
-  padding: 3px;
-  display: flex;
-  width: 50%;  
-  
-`
 
 const buttonStyle = css`
-    transform: translateY(50%) translateX(-50%);
+    transform: translateX(-50%);
     font-size: 20px;
     cursor: pointer;  
 `
@@ -75,8 +71,8 @@ const Datetime = css`
 const textInputStyle = css`
     width: 250px;
     min-width: 20px;
-    margin: 2px;
-    padding: 0.3em 1.0em;
+    margin: 1px;
+    padding: 0.2em 1.0em;
     border-radius: 8px;
     border: 1px solid transparent;
     font-size: 1.0em;
@@ -88,7 +84,7 @@ const textInputStyle = css`
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 `
 
-export const InputProject = ({setIsFetching}:InputProps):JSX.Element  => {
+export const InputProject = ({fetch,setFetch}:InputProps):JSX.Element  => {
 
   type state = {
     title: string,
@@ -127,7 +123,7 @@ export const InputProject = ({setIsFetching}:InputProps):JSX.Element  => {
     if (e.key === 'Enter') {
       createTask();
       setTask(initialState);
-      setIsFetching(true);
+      setFetch(fetch + 1);
     }
   }
 
@@ -148,7 +144,7 @@ export const InputProject = ({setIsFetching}:InputProps):JSX.Element  => {
     if(task.title === '') return;
     createTask();
     setTask(initialState);
-    setIsFetching(true);
+    setFetch(fetch + 1);
   }
 
   return (
@@ -168,8 +164,8 @@ export const InputProject = ({setIsFetching}:InputProps):JSX.Element  => {
           minuteStep={5}
           format={timeFormat}
         />
-        <input css={textInputStyle} 
-          placeholder="Enter a project"
+        <Input css={textInputStyle} 
+          placeholder="タスクを入力"
           name="title"
           value={task.title}
           onChange={handleInput}
@@ -179,9 +175,18 @@ export const InputProject = ({setIsFetching}:InputProps):JSX.Element  => {
           onClick={clickHandle}/>
     </div>
     <div css={formStyle}>
-        <textarea css={css`
-          width: 60%
-          `}/>
+        <TextArea
+          name="text"
+          value={task.text}
+          onChange={handleInput}
+          css={css`
+          width: 50%
+          `}
+          autoSize={{minRows:1}}
+          />
+        <Checkbox>
+          通知を無効化
+        </Checkbox>
     </div>
   </div>
   )

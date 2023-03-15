@@ -16,18 +16,16 @@ const headerStyle = css`
   background-color: rgb(30,30,30);
   color: #f6f6f6;
   cursor: default;
-  transition-duration: 0.15s;
     overflow: hidden;
  `
 const headerExpanded =css(
     headerStyle,
-    css`
-    height:100px;
+    css` 
+    height: auto;
     `,
 );
 
 const expandButton = css`
-    transition-duration: 0.15s;
     font-size:20px;
     position:absolute;
     top: 40px;

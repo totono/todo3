@@ -42,8 +42,9 @@ const init = css`
 
 
 function App() {
-const [isFetching, setIsFetching] = useState<boolean>(false);
-  return (
+  const [fetch, setFetch] = useState<number>(0);
+  
+    return (
     <ConfigProvider
     theme={{
       algorithm: theme.darkAlgorithm,
@@ -52,13 +53,14 @@ const [isFetching, setIsFetching] = useState<boolean>(false);
     <Global styles={init}/>
       <Header>
           <InputProject
-            setIsFetching={setIsFetching}
+            fetch={fetch}
+            setFetch={setFetch}
           />
       </Header>
     <ul>
       <Projects
-        isFetching={isFetching}
-        setIsFetching={setIsFetching}
+        fetch={fetch}
+        setFetch={setFetch}
        />
     </ul>
   </ConfigProvider>

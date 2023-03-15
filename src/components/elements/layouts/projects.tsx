@@ -2,14 +2,16 @@ import { CompleteCheck } from "../Input/CompleteCheck";
 import { Model } from "../../../bindings/tasks";
 import { taskCommand } from "../../../ipcs";
 import { useState,useEffect } from "react";
+import { setAlarm } from '../../../components/interection/notification'
 
 type ProjectProps = {
-    isFetching: boolean;
-    setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
+    fetch: number;
+    setFetch: React.Dispatch<React.SetStateAction<number>>;
 }
 
 
-export const Projects = ({isFetching,setIsFetching}:ProjectProps):JSX.Element => {
+
+export const Projects = ({fetch,setFetch}:ProjectProps):JSX.Element => {
 
     const [projects, setProjects] = useState<Model[]>([]);
 
@@ -17,10 +19,10 @@ export const Projects = ({isFetching,setIsFetching}:ProjectProps):JSX.Element =>
         const fetchData = async()=> {
             const res = await taskCommand.getTasks();
             setProjects(res);
+            setAlarm(res);
         }
         fetchData();
-        setIsFetching(false);
-    },[isFetching]);
+    },[fetch]);
 
     const list = projects.map((p:Model) => {
         if (p.completed === "Completed"){
@@ -30,7 +32,7 @@ export const Projects = ({isFetching,setIsFetching}:ProjectProps):JSX.Element =>
             <li className="row" key={p.id}>
                 <CompleteCheck
                     data={p.id}
-                    setIsFetching={setIsFetching}
+                    setFetch={setFetch}
                 />
                 {p.limit_date} {p.title}
             </li>
