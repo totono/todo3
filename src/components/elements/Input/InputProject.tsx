@@ -105,16 +105,14 @@ export const InputProject = ({fetch,setFetch}:InputProps):JSX.Element  => {
   const [task, setTask] = useState(initialState);
 
   const createTask = () => {
-    const time = task.time != null ? task.time.format('HH:mm') : '       ';
-
-    console.log(time)
-
-    const limitDate = `${task.date?.format('YYYY/MM/DD')} ${time}`
+    const date = task.time?.format('YYYY/MM/DD');
+    const time = task.time?.format('HH:mm');
     taskCommand.createTask(
       task.title,
       task.text,
       task.filePath,
-      limitDate,
+      date,
+      time,
     );
   }
   
@@ -156,7 +154,6 @@ export const InputProject = ({fetch,setFetch}:InputProps):JSX.Element  => {
           onChange={handleDateInput}
         />
         <TimePicker css={Datetime}
-          //type="time"
           name="time"
           value={task.time}
           onChange={handleTimeInput}

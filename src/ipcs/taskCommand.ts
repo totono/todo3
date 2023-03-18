@@ -10,7 +10,8 @@ const createTask = async (
     title: string,
     text: string,
     filePath: string,
-    limitDate: string,
+    limitDate: string | undefined,
+    limitTime: string | undefined,
     ) => {
     let e = await invoke(
       "create_task",
@@ -18,7 +19,9 @@ const createTask = async (
         title: title,
         text: text,
         filePath: filePath,
-        limitDate: limitDate
+        limitDate: limitDate,
+        limitTime: limitTime,
+            
       }
     )
 }

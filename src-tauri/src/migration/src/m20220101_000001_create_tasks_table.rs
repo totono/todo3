@@ -21,13 +21,24 @@ impl MigrationTrait for Migration {
                     .col(ColumnDef::new(Tasks::Title).string().not_null())
                     .col(ColumnDef::new(Tasks::Text).string())
                     .col(ColumnDef::new(Tasks::FilePath).string())
-                    .col(ColumnDef::new(Tasks::Completed).integer().not_null().default(0))
+                    .col(
+                        ColumnDef::new(Tasks::Completed)
+                            .integer()
+                            .not_null()
+                            .default(0),
+                    )
                     .col(ColumnDef::new(Tasks::CompletedDate).date_time())
                     .col(ColumnDef::new(Tasks::LimitDate).date_time())
+                    .col(ColumnDef::new(Tasks::LimitTime).date_time())
                     .col(ColumnDef::new(Tasks::CreateDate).date_time().not_null())
                     .col(ColumnDef::new(Tasks::UpdateDate).date_time().not_null())
                     .col(ColumnDef::new(Tasks::DeletedDate).date_time())
-                    .col(ColumnDef::new(Tasks::IsDeleted).integer().not_null().default(0))
+                    .col(
+                        ColumnDef::new(Tasks::IsDeleted)
+                            .integer()
+                            .not_null()
+                            .default(0),
+                    )
                     .to_owned(),
             )
             .await
@@ -51,6 +62,7 @@ enum Tasks {
     Completed,
     CompletedDate,
     LimitDate,
+    LimitTime,
     CreateDate,
     UpdateDate,
     DeletedDate,

@@ -19,6 +19,7 @@ pub struct Model {
     pub completed: status::CompleteStatus,
     pub completed_date: Option<String>,
     pub limit_date: Option<String>,
+    pub limit_time: Option<String>,
     pub create_date: String,
     pub update_date: Option<String>,
     pub deleted_date: Option<String>,
