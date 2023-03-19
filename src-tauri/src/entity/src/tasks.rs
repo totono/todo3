@@ -14,7 +14,7 @@ pub struct Model {
     #[sea_orm(primary_key)]
     pub id: i32,
     pub title: String,
-    pub text: String,
+    pub text: Option<String>,
     pub file_path: Option<String>,
     pub completed: status::CompleteStatus,
     pub completed_date: Option<String>,

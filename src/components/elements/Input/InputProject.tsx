@@ -2,11 +2,11 @@
 import { css } from "@emotion/react"
 import { taskCommand } from "../../../ipcs";
 import { AiOutlinePlusCircle } from "react-icons/ai"
-import { InputDateTime } from "./InputDatetime";
 import { ChangeEventHandler, useState, } from "react";
 import { TimePicker,DatePicker,Input,Checkbox } from "antd";
 import 'dayjs/locale/ja';
 import dayjs, { Dayjs } from "dayjs";
+import { Model } from "../../../bindings/tasks";
 
 type InputProps = {
     fetch : number;
@@ -21,7 +21,7 @@ const today = () => {
     const mm = String(today.getMonth()+1).padStart(2,"0");
     const yyyy = today.getFullYear();
 
-    return `${yyyy}-${mm}-${dd}`;
+    return `${yyyy}/${mm}/${dd}`;
 }
 
 const timeFormat = 'HH:mm'
@@ -97,23 +97,29 @@ export const InputProject = ({fetch,setFetch}:InputProps):JSX.Element  => {
   const initialState:state = {
     title: "",
     text: "",
-    date: dayjs(today(),'YYYY-MM-DD'),
+    date: dayjs(today(),'YYYY/MM/DD'),
     time: null, 
     filePath: "",
   }
  
   const [task, setTask] = useState(initialState);
 
-  const createTask = () => {
-    const date = task.time?.format('YYYY/MM/DD');
-    const time = task.time?.format('HH:mm');
-    taskCommand.createTask(
-      task.title,
-      task.text,
-      task.filePath,
-      date,
-      time,
+  const createTask = async() => {
+    const date = task.date?.format('YYYY/MM/DD') ?? null;
+    const time = task.time?.format('HH:mm') ?? null;
+
+    const res:Model = await taskCommand.create(
+        task.title,
+        task.text,
+        null,
+        date,
+        time,
     );
+
+    if (date === today() && time !== null){
+      console.log("front set notification");
+      await taskCommand.setNotification(res);
+    }
   }
   
   const handleKeyDown = (e:any) => {

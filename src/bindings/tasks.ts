@@ -2,4 +2,4 @@
 import type { CompleteStatus } from "../../src-tauri/src/entity/bindings/CompleteStatus";
 import type { DeleteStatus } from "../../src-tauri/src/entity/bindings/DeleteStatus";
 
-export interface Model { id: number, title: string, text: string, file_path: string | null, completed: CompleteStatus, completed_date: string | null, limit_date: string | null, create_date: string, update_date: string | null, deleted_date: string | null, is_deleted: DeleteStatus, }
+export interface Model { id: number, title: string, text: string, file_path: string | null, completed: CompleteStatus, completed_date: string | null, limit_date: string | null,limit_time: string | null, create_date: string, update_date: string | null, deleted_date: string | null, is_deleted: DeleteStatus, }

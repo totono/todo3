@@ -12,16 +12,16 @@ pub async fn create_task(
     state: State<'_>,
     title: String,
     limit_date: String,
-    limit_time: String,
-    text: String,
-    file_path: String,
+    limit_time: Option<String>,
+    text: Option<String>,
+    file_path: Option<String>,
 ) -> Result<tasks::Model, String> {
     let new_task = tasks::ActiveModel {
         title: Set(title),
         text: Set(text),
-        file_path: Set(Some(file_path)),
+        file_path: Set(file_path),
         limit_date: Set(Some(limit_date)),
-        limit_time: Set(Some(limit_time)),
+        limit_time: Set(limit_time),
         ..Default::default()
     };
 

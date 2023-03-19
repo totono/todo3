@@ -6,27 +6,38 @@ const getTasks = async() : Promise<Model[]> => {
     return await invoke("task_list");
 } 
 
-const createTask = async (
+const create = async (
     title: string,
     text: string,
-    filePath: string,
-    limitDate: string | undefined,
-    limitTime: string | undefined,
+    filePath: string | null,
+    limitDate: string | null,
+    limitTime: string | null,
     ) => {
-    let e = await invoke(
+    let res:Model = await invoke(
       "create_task",
-      {
+      {            
         title: title,
         text: text,
-        filePath: filePath,
+        filePath: "",
         limitDate: limitDate,
         limitTime: limitTime,
-            
       }
     )
+    return res;
 }
 
-const changeTaskStatus = async (id: number, status: CompleteStatus) => {
+const setNotification = async (
+    task:Model
+) => {
+    let res =await invoke(
+            "set_notification",
+        {
+            task
+        })
+    console.log(`invoked set_notification, res is ${res}`)
+}
+
+const changeStatus = async (id: number, status: CompleteStatus) => {
     let e = await invoke(
         "complete_task",
     {
@@ -35,7 +46,7 @@ const changeTaskStatus = async (id: number, status: CompleteStatus) => {
     })
 }
 
-const logicalDeleteTask = async (id:number) => {
+const logicalDelete = async (id:number) => {
     let e = await invoke(
         "logical_delete_task",
         {
@@ -45,7 +56,7 @@ const logicalDeleteTask = async (id:number) => {
 
 }
 
-const physicalDeleteTask = async (id:number) => {
+const physicalDelete = async (id:number) => {
     let e = await invoke(
         "physical_delete_task",
         {
@@ -57,6 +68,7 @@ const physicalDeleteTask = async (id:number) => {
 
 export const taskCommand = {
     getTasks,
-    createTask,
-    changeTaskStatus,
+    create,
+    changeStatus,
+    setNotification,
 } as const;

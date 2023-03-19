@@ -9,6 +9,8 @@ use run_event::run_event;
 use store::AppState;
 use system_tray::{create_system_tray, system_tray_event};
 
+use crate::interection::set_notification;
+
 mod interection;
 mod mutation;
 mod query;
@@ -22,7 +24,7 @@ async fn initilize() -> store::AppState {
     if let Ok(Some(tasks)) = todays_task(&store).await {
         for task in tasks {
             let mut sched = store.scheduler.lock().unwrap();
-            sched.insert(task).await;
+            sched.insert(task);
         }
     }
     store
@@ -42,6 +44,7 @@ async fn main() {
             complete_task,
             logical_delete_task,
             physical_delete_task,
+            set_notification,
         ])
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
