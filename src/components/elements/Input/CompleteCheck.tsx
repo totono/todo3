@@ -5,7 +5,7 @@ import { taskCommand } from "../../../ipcs";
 export const CompleteCheck = (props:any) => {
     console.log(props.data) 
     const checkHandle = (e:any) => {
-        taskCommand.changeTaskStatus(parseInt(e.target.value),"Completed");
+        taskCommand.changeStatus(parseInt(e.target.value),"Completed");
     }
     
     return (

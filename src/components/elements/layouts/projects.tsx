@@ -2,7 +2,8 @@ import { CompleteCheck } from "../Input/CompleteCheck";
 import { Model } from "../../../bindings/tasks";
 import { taskCommand } from "../../../ipcs";
 import { useState,useEffect } from "react";
-import { setAlarm } from '../../../components/interection/notification'
+import { setAlarm2 } from '../../../components/interection/notification'
+import { TaskList } from "../../task";
 
 type ProjectProps = {
     fetch: number;
@@ -19,12 +20,21 @@ export const Projects = ({fetch,setFetch}:ProjectProps):JSX.Element => {
         const fetchData = async()=> {
             const res = await taskCommand.getTasks();
             setProjects(res);
-            setAlarm(res);
+            setAlarm2(res);
         }
         fetchData();
     },[fetch]);
 
-    const list = projects.map((p:Model) => {
+
+    return (
+        <TaskList
+            tasks={projects}
+            setFetch={setFetch}
+        />
+    )
+
+    /*
+   const list = projects.map((p:Model) => {
         if (p.completed === "Completed"){
             return null
         }
@@ -34,7 +44,15 @@ export const Projects = ({fetch,setFetch}:ProjectProps):JSX.Element => {
                     data={p.id}
                     setFetch={setFetch}
                 />
-                {p.limit_date} {p.title}
+                <div>
+                {p.limit_date}
+                </div>
+                <div>
+                {p.limit_time}
+                </div>
+                <div>
+                {p.title}
+                </div>
             </li>
         );
     });
@@ -43,5 +61,5 @@ export const Projects = ({fetch,setFetch}:ProjectProps):JSX.Element => {
         <div>
             <ul>{list}</ul>
         </div>
-    )
+    )*/
 }

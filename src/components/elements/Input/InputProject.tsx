@@ -116,10 +116,10 @@ export const InputProject = ({fetch,setFetch}:InputProps):JSX.Element  => {
         time,
     );
 
-    if (date === today() && time !== null){
-      console.log("front set notification");
-      await taskCommand.setNotification(res);
-    }
+    //if (date === today() && time !== null){
+    //  console.log("front set notification");
+    //  await taskCommand.setNotification(res);
+    //}
   }
   
   const handleKeyDown = (e:any) => {
@@ -188,7 +188,7 @@ export const InputProject = ({fetch,setFetch}:InputProps):JSX.Element  => {
           autoSize={{minRows:1}}
           />
         <Checkbox>
-          通知を無効化
+          通知しない
         </Checkbox>
     </div>
   </div>

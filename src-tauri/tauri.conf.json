@@ -25,7 +25,9 @@
         "all": true
       },
       "window": {
-        "requestUserAttention": true
+        "requestUserAttention": true,
+        "show": true,
+        "minimize": true
       }
     },
     "bundle": {
