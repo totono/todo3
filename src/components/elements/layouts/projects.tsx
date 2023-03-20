@@ -32,34 +32,4 @@ export const Projects = ({fetch,setFetch}:ProjectProps):JSX.Element => {
             setFetch={setFetch}
         />
     )
-
-    /*
-   const list = projects.map((p:Model) => {
-        if (p.completed === "Completed"){
-            return null
-        }
-        return (
-            <li className="row" key={p.id}>
-                <CompleteCheck
-                    data={p.id}
-                    setFetch={setFetch}
-                />
-                <div>
-                {p.limit_date}
-                </div>
-                <div>
-                {p.limit_time}
-                </div>
-                <div>
-                {p.title}
-                </div>
-            </li>
-        );
-    });
-
-    return (
-        <div>
-            <ul>{list}</ul>
-        </div>
-    )*/
 }

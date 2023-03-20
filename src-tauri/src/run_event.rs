@@ -1,5 +1,4 @@
 use tauri::AppHandle;
-use tauri::Manager;
 use tauri::RunEvent;
 
 pub fn run_event() -> Box<dyn Fn(&AppHandle, RunEvent) + Send + Sync + 'static> {

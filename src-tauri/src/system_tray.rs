@@ -1,5 +1,5 @@
 use tauri::{AppHandle, CustomMenuItem, SystemTray, SystemTrayEvent, SystemTrayMenu};
-use tauri::{Manager, WindowBuilder};
+use tauri::{Manager};
 
 pub fn create_system_tray() -> SystemTray {
     let quit = CustomMenuItem::new("quit".to_string(), "Quit");

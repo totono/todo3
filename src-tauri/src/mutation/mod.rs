@@ -1,9 +1,6 @@
-use std::sync::Arc;
-
-//use entity::{status, projects::Model};
 use ::entity::{status::CompleteStatus, status::DeleteStatus, tasks, tasks::Entity as Tasks};
 use chrono::*;
-use sea_orm::{prelude::*, sea_query::Expr, ActiveValue::Set, UpdateResult};
+use sea_orm::{prelude::*, ActiveValue::Set};
 
 use crate::store::State;
 
