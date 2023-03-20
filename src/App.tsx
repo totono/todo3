@@ -26,7 +26,12 @@ const init = css`
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: 100%; 
+    -webkit-text-size-adjust: 100%;
+
+    .ant-picker-footer {
+      display: none;
+    }
+
     }
     ::-webkit-scrollbar{
       display: none;

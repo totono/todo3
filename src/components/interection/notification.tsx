@@ -18,8 +18,11 @@ const isPlayAlarmTime = (time:string) => {
 
 const notify = (el:Model) => {
       sendNotification({ title: 'セットしたタスクの時間です', body: `${el!.title}`});
-      //appWindow.show().then();
-      appWindow.minimize().then();  
+      const visible = appWindow.isVisible();
+      if (!visible){
+          appWindow.show().then();
+      }
+      //appWindow.minimize().then();  
       appWindow.requestUserAttention(UserAttentionType.Critical);
 }
 
@@ -52,7 +55,7 @@ const isFuture = (date:string,time:string|null) => {
 
 let timerId:number;
 
-export const setAlarm2 = (projects:Model[]) => {
+export const setAlarm = (projects:Model[]) => {
 
     const filtered = projects
     .filter(obj => 
@@ -68,26 +71,4 @@ export const setAlarm2 = (projects:Model[]) => {
 
     timerId = resetTimer(timerId,sorted);
     
-}
-
-
-
-
-
-export const setAlarm = (projects:Model[]) => {
-
-    const now = dayjs();
-    
-    projects.map(e => {
-        const limit_date = dayjs(e.limit_date)
-
-        //if (limit_date > now){
-        //    if (permissionGranded) {
-        //    setTimeout(() => {
-        //        sendNotification({ title: 'セットしたタスクの時間です', body: `${e.title}`})
-        //        appWindow.requestUserAttention(UserAttentionType.Critical);
-        //    }, limit_date.diff(now))
-        //    }
-        //}
-    })
 }

@@ -2,7 +2,7 @@ import { CompleteCheck } from "../Input/CompleteCheck";
 import { Model } from "../../../bindings/tasks";
 import { taskCommand } from "../../../ipcs";
 import { useState,useEffect } from "react";
-import { setAlarm2 } from '../../../components/interection/notification'
+import { setAlarm } from '../../../components/interection/notification'
 import { TaskList } from "../../task";
 
 type ProjectProps = {
@@ -20,7 +20,7 @@ export const Projects = ({fetch,setFetch}:ProjectProps):JSX.Element => {
         const fetchData = async()=> {
             const res = await taskCommand.getTasks();
             setProjects(res);
-            setAlarm2(res);
+            setAlarm(res);
         }
         fetchData();
     },[fetch]);

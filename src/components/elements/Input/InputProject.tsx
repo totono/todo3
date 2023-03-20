@@ -69,7 +69,7 @@ const Datetime = css`
 
 
 const textInputStyle = css`
-    width: 250px;
+    width: 300px;
     min-width: 20px;
     margin: 1px;
     padding: 0.2em 1.0em;
@@ -115,11 +115,6 @@ export const InputProject = ({fetch,setFetch}:InputProps):JSX.Element  => {
         date,
         time,
     );
-
-    //if (date === today() && time !== null){
-    //  console.log("front set notification");
-    //  await taskCommand.setNotification(res);
-    //}
   }
   
   const handleKeyDown = (e:any) => {
@@ -152,7 +147,6 @@ export const InputProject = ({fetch,setFetch}:InputProps):JSX.Element  => {
   }
 
   return (
-  <div>
     <div css={formStyle}>
         <DatePicker css={Datetime}
           name="date"
@@ -162,8 +156,9 @@ export const InputProject = ({fetch,setFetch}:InputProps):JSX.Element  => {
         <TimePicker css={Datetime}
           name="time"
           value={task.time}
+          onSelect={handleTimeInput}
           onChange={handleTimeInput}
-          defaultValue={dayjs(null,timeFormat)}
+          defaultValue={dayjs('10:00',timeFormat)}
           minuteStep={5}
           format={timeFormat}
         />
@@ -177,20 +172,5 @@ export const InputProject = ({fetch,setFetch}:InputProps):JSX.Element  => {
         <AiOutlinePlusCircle css={buttonStyle}
           onClick={clickHandle}/>
     </div>
-    <div css={formStyle}>
-        <TextArea
-          name="text"
-          value={task.text}
-          onChange={handleInput}
-          css={css`
-          width: 50%
-          `}
-          autoSize={{minRows:1}}
-          />
-        <Checkbox>
-          通知しない
-        </Checkbox>
-    </div>
-  </div>
   )
 }
