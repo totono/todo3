@@ -11,8 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
-src-tauri/src/entity/target/*
-src-tauri/src/migration/target/*
+src-tauri/src/entity/target
+src-tauri/src/migration/target
 store/*
 
 # Editor directories and files
