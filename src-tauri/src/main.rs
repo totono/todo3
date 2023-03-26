@@ -24,12 +24,10 @@ async fn initilize() -> store::AppState {
 
 //#[tokio::main]
 fn main() {
-    //let store = initilize().await;
 
     tauri::Builder::default()
         .system_tray(create_system_tray())
         .on_system_tray_event(system_tray_event)
-        //.manage(store)
         .setup(|app| {
             tauri::async_runtime::block_on(async move {
                 app.manage(initilize().await);
@@ -38,7 +36,9 @@ fn main() {
         })
         .on_window_event(|event| {
             if let tauri::WindowEvent::CloseRequested { api, .. } = event.event() {
-                event.window().hide().unwrap();
+                event.window().minimize().unwrap();
+                let window = event.window().get_window("main").expect("falied to get window");
+                window.set_skip_taskbar(true).unwrap();
                 api.prevent_close();
             }
         })
@@ -51,5 +51,6 @@ fn main() {
         ])
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
+        //.run();
         .run(run_event());
 }
