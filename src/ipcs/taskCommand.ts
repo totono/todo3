@@ -71,4 +71,5 @@ export const taskCommand = {
     create,
     changeStatus,
     setNotification,
+    logicalDelete,
 } as const;

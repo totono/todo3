@@ -5,6 +5,7 @@ import { Projects } from "./components/elements/layouts/projects";
 import { useState } from "react";
 import { InputProject } from "./components/elements/Input/InputProject"
 import { ConfigProvider,theme } from 'antd'
+import { appWindow } from "@tauri-apps/api/window";
 
 const init = css`
   body{
@@ -47,8 +48,8 @@ const init = css`
 
 
 function App() {
-  const [fetch, setFetch] = useState<number>(0);
-  
+  const [fetch, setFetch] = useState<boolean>(false);
+ 
     return (
     <ConfigProvider
     theme={{
@@ -56,13 +57,10 @@ function App() {
   }}
   >
     <Global styles={init}/>
-      <Header>
-          <InputProject
-            fetch={fetch}
-            setFetch={setFetch}
-          />
-      </Header>
-    <ul>
+      <Header
+        fetch={fetch}
+        setFetch={setFetch}/>
+    <ul css={css`padding-left:0;`}>
       <Projects
         fetch={fetch}
         setFetch={setFetch}

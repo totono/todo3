@@ -17,12 +17,16 @@ pub fn system_tray_event(app_handle: &AppHandle, event: SystemTrayEvent) {
             size: _,
             ..
         } => {
-            window.show().unwrap();
+            window.set_skip_taskbar(false).unwrap();
+            window.unminimize().unwrap();
+            window.set_focus().unwrap();
         }
 
         SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
             "open" => {
-                window.show().unwrap();
+                window.set_skip_taskbar(false).unwrap();
+                window.unminimize().unwrap();
+                window.set_focus().unwrap();
             }
             "quit" => {
                 std::process::exit(0);

@@ -40,8 +40,8 @@ pub async fn complete_task(
 
     let task = tasks::ActiveModel {
         id: Set(id),
-        completed: Set(status),
-        completed_date: Set(Some(current_time)),
+        is_completed: Set(status),
+        completed_at: Set(Some(current_time)),
         ..Default::default()
     };
 
@@ -59,7 +59,7 @@ pub async fn logical_delete_task(state: State<'_>, id: i32) -> Result<tasks::Mod
     let task = tasks::ActiveModel {
         id: Set(id),
         is_deleted: Set(DeleteStatus::Deleted),
-        completed_date: Set(Some(current_time)),
+        completed_at: Set(Some(current_time)),
         ..Default::default()
     };
 

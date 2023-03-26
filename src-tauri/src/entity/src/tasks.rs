@@ -16,13 +16,14 @@ pub struct Model {
     pub title: String,
     pub text: Option<String>,
     pub file_path: Option<String>,
-    pub completed: status::CompleteStatus,
-    pub completed_date: Option<String>,
+    pub completed_at: Option<String>,
+    pub is_completed: status::CompleteStatus,
     pub limit_date: Option<String>,
     pub limit_time: Option<String>,
-    pub create_date: String,
-    pub update_date: Option<String>,
-    pub deleted_date: Option<String>,
+    pub should_notify: Option<i32>,
+    pub create_at: String,
+    pub update_at: Option<String>,
+    pub deleted_at: Option<String>,
     pub is_deleted: status::DeleteStatus,
 }
 
@@ -35,7 +36,7 @@ impl ActiveModelBehavior for ActiveModel {
     fn new() -> Self {
         let current_time  = Local::now().format("%Y/%M/%d %H:%M:%S").to_string().to_owned();
         Self { 
-            create_date: Set(current_time),
+            create_at: Set(current_time),
             ..ActiveModelTrait::default()
             }
     }
@@ -47,7 +48,7 @@ impl ActiveModelBehavior for ActiveModel {
         C: ConnectionTrait,
     {
         let current_time  = Local::now().format("%Y/%M/%d %H:%M:%S").to_string().to_owned();
-        self.update_date = Set(Some(current_time));
+        self.update_at = Set(Some(current_time));
 
         Ok(self)
     }

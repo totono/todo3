@@ -22,17 +22,18 @@ impl MigrationTrait for Migration {
                     .col(ColumnDef::new(Tasks::Text).string())
                     .col(ColumnDef::new(Tasks::FilePath).string())
                     .col(
-                        ColumnDef::new(Tasks::Completed)
+                        ColumnDef::new(Tasks::IsCompleted)
                             .integer()
                             .not_null()
                             .default(0),
                     )
-                    .col(ColumnDef::new(Tasks::CompletedDate).date_time())
                     .col(ColumnDef::new(Tasks::LimitDate).date_time())
                     .col(ColumnDef::new(Tasks::LimitTime).date_time())
-                    .col(ColumnDef::new(Tasks::CreateDate).date_time().not_null())
-                    .col(ColumnDef::new(Tasks::UpdateDate).date_time().not_null())
-                    .col(ColumnDef::new(Tasks::DeletedDate).date_time())
+                    .col(ColumnDef::new(Tasks::ShouldNotify).integer())
+                    .col(ColumnDef::new(Tasks::CompletedAt).date_time())
+                    .col(ColumnDef::new(Tasks::CreateAt).date_time().not_null())
+                    .col(ColumnDef::new(Tasks::UpdateAt).date_time().not_null())
+                    .col(ColumnDef::new(Tasks::DeletedAt).date_time())
                     .col(
                         ColumnDef::new(Tasks::IsDeleted)
                             .integer()
@@ -59,12 +60,13 @@ enum Tasks {
     Title,
     Text,
     FilePath,
-    Completed,
-    CompletedDate,
+    IsCompleted,
     LimitDate,
     LimitTime,
-    CreateDate,
-    UpdateDate,
-    DeletedDate,
+    ShouldNotify,
+    CompletedAt,
+    CreateAt,
+    UpdateAt,
+    DeletedAt,
     IsDeleted,
 }
