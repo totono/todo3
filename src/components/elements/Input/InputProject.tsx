@@ -111,6 +111,7 @@ export const InputProject = ({
       createTask();
       setTask(initialState);
       setFetch(true);
+      e.preventDefault();
     }
   };
 
