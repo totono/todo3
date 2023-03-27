@@ -17,11 +17,6 @@
     },
     "allowlist": {
       "all": false,
-      "fs": {
-        "createDir": true,
-        "writeFile": true,
-        "readFile": true
-      },
       "shell": {
         "all": false,
         "open": true
@@ -34,9 +29,7 @@
         "show": true,
         "minimize": true,
         "unminimize": true,
-        "setSkipTaskbar": true,
-        "setFocus": true,
-        "setAlwaysOnTop": true
+        "setSkipTaskbar": true
       }
     },
     "bundle": {
@@ -63,7 +56,6 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": [".env"],
       "shortDescription": "",
       "targets": "all",
       "windows": {

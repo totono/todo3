@@ -13,12 +13,7 @@ pub struct AppState {
 
 impl AppState {
     pub async fn new() -> Self {
-        let url = dotenv::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        //let conn: DatabaseConnection = Database::connect(url)
-        //    .await
-        //    .expect("Database connection failed");
-
-        let db = create_db(&url).await.expect("Database connection failed");
+        let db = create_db().await.expect("Database connection failed");
         Self {
             db: Arc::new(db),
         }
