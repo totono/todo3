@@ -1,5 +1,5 @@
-use sea_orm::{Database, DatabaseConnection};
-use std::sync::{Arc,Mutex};
+use sea_orm::{DatabaseConnection};
+use std::sync::{Arc};
 use tauri::State as TauriState;
 
 use create_db::create_db;
