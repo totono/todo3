@@ -3,30 +3,15 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { css } from "@emotion/react";
 import { appWindow } from "@tauri-apps/api/window";
 import { Collapse } from "antd";
+import dayjs from "dayjs";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { Children, Dispatch, SetStateAction, useState } from "react";
 import { Model } from "../bindings/tasks";
 import { taskCommand } from "../ipcs";
 import { CompleteCheck } from "./elements/Input/CompleteCheck";
+dayjs.extend(isSameOrBefore);
 
 const { Panel } = Collapse;
-
-const headerStyle = css`
-  display: flex;
-  align-items: center;
-  text-align: left;
-  :hover {
-    background-color: rgb(36, 36, 36);
-  }
-  button {
-    display: none;
-  }
-  :hover .ant-btn {
-    display: initial;
-    height: 20px;
-    margin-left: auto;
-    font-size: 10px;
-  }
-`;
 
 const contentStyle = css`
   display: block;
@@ -37,21 +22,66 @@ interface listItemProps {
   setFetch: Dispatch<SetStateAction<boolean>>;
 }
 
+const isToday = (date: string | null) => {
+  if (date === null) {
+    return false;
+  }
+  const today = dayjs().format("YYYY/MM/DD");
+  return date === today;
+};
+
+const isBeforeToday = (date: string | null) => {
+  if (date === null) {
+    return false;
+  }
+  const today = dayjs().format("YYYY/MM/DD");
+  return dayjs(date).isSameOrBefore(today);
+};
+
+
+
+//limit_date + limit_timeを日付型に変換して、本日ならば"today"、本日より前ならば"before"、本日より後ならば"after"を返す
+const dateSwitcher = (limit_date: string | null, limit_time: string | null) => {
+  const date = limit_date == null ? "3000/1/1" : limit_date;
+  const time = limit_time == null ? "23:59" : limit_time;
+  const limit = dayjs(date + " " + time);
+  const now = dayjs();
+  if (limit.isSame(now, "day")) {
+    return "today";
+  } else if (limit.isBefore(now)) {
+    return "before";
+  } else {
+    return "after";
+  }
+};
+
+
 const ListItem = (props: listItemProps) => {
+
+  const e = "today";
+
+  const colorSwitchByDay = (e: string) => {
+    switch (e){
+      case "before": return "rgb(21, 21, 21)";
+      case "today": return "rgb(22, 28, 23)";
+      case "after": return "rgb(20, 20, 20)";
+    }
+  }
+
+  const listItemStyle = () => {
+    return css`
+      list-style: none;
+      :hover {
+        background-color: rgb(36, 36, 36);
+      }
+      background-color: ${colorSwitchByDay(dateSwitcher(props.task.limit_date, props.task.limit_time))};
+    `;
+  };
+
   return (
-    <li
-      css={css`
-        list-style: none;
-        background-color: rgb(21, 21, 21);
-      `}
-    >
+    <li css={listItemStyle}>
       <Collapse>
-        <Panel
-          key="taskHeader"
-          header={
-            <Header {...props} />
-          }
-        >
+        <Panel key="taskHeader" header={<Header {...props} />}>
           <Content {...props} />
         </Panel>
       </Collapse>
@@ -60,9 +90,51 @@ const ListItem = (props: listItemProps) => {
 };
 
 const Header = (props: listItemProps) => {
+  const date = (limit_date: string | null) => {
+    if (limit_date === null) {
+      return "";
+    }
+    if (isToday(limit_date)) {
+      return "";
+    } else {
+      return limit_date;
+    }
+  };
+
+  //limit_date+limit_timeを日付型に変換して、現在時刻と比較して、期限切れかどうかを判定する
+  const isExpired = (limit_date: string | null, limit_time: string | null) => {
+    const date = limit_date == null ? "3000/1/1" : limit_date;
+    const time = limit_time == null ? "23:59" : limit_time;
+    const limit = dayjs(date + " " + time);
+    const now = dayjs();
+    return limit.isBefore(now);
+  };
+
+  //期限切れの場合は、文字色を赤にする
+  const headerStyle = (isExpired: boolean) => {
+    return css`
+      display: flex;
+      align-items: center;
+      text-align: left;
+      color: ${isExpired ? "rgb(144, 29, 29)" : "white"};
+
+      button {
+        display: none;
+      }
+      :hover .ant-btn {
+        display: initial;
+        height: 20px;
+        margin-left: auto;
+        font-size: 10px;
+      }
+    `;
+  };
+
   return (
-    <div css={headerStyle}>
-      <div>{props.task.limit_date}</div>
+    <div
+      css={headerStyle(isExpired(props.task.limit_date, props.task.limit_time))}
+    >
+      <div>{date(props.task.limit_date)}</div>
       <div
         css={css`
           min-width: 50px;
@@ -72,19 +144,16 @@ const Header = (props: listItemProps) => {
         {props.task.limit_time}
       </div>
       <div>{props.task.title}</div>
-          <CompleteCheck
-        data={props.task.id} setFetch={props.setFetch} />
+      <CompleteCheck data={props.task.id} setFetch={props.setFetch} />
     </div>
   );
 };
 
-
 const Content = (props: listItemProps) => {
-  const clickHandle = async () =>  {
+  const clickHandle = async () => {
     props.setFetch(true);
     taskCommand.logicalDelete(props.task.id);
-  }
-
+  };
 
   return (
     <div css={contentStyle}>
@@ -110,13 +179,10 @@ const Content = (props: listItemProps) => {
   );
 };
 
-
 interface taskListProps {
   tasks: Model[];
   setFetch: Dispatch<SetStateAction<boolean>>;
 }
-
-
 
 export const TaskList = (props: taskListProps) => {
   //const [filter, setFilter] = useState<Filter>('');
