@@ -6,7 +6,6 @@
 
 use mutation::*;
 use query::{task_list};
-use run_event::run_event;
 use store::AppState;
 use system_tray::{create_system_tray, system_tray_event};
 use tauri::Manager;
@@ -26,6 +25,17 @@ async fn initilize() -> store::AppState {
 fn main() {
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_single_instance::init(|app , _argv, _cwd|{
+            if let Some(window) = app.get_window("main"){
+                if let Err(e) = window.unminimize() {
+                    println!("failed to unminimize window: {e}");
+                }
+                if let Err(e) = window.set_focus() {
+                    println!("failed to set focus: {e}");
+                }
+            }
+        }))
+        .plugin(tauri_plugin_window_state::Builder::default().build())
         .system_tray(create_system_tray())
         .on_system_tray_event(system_tray_event)
         .setup(|app| {
@@ -49,7 +59,6 @@ fn main() {
             logical_delete_task,
             physical_delete_task,
         ])
-        .build(tauri::generate_context!())
+        .run(tauri::generate_context!())
         .expect("error while running tauri application")
-        .run(run_event());
 }
