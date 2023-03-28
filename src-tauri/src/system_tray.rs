@@ -12,7 +12,7 @@ pub fn create_system_tray() -> SystemTray {
 pub fn system_tray_event(app_handle: &AppHandle, event: SystemTrayEvent) {
     let window = app_handle.get_window("main").expect("failed to get window");
     match event {
-        SystemTrayEvent::DoubleClick {
+        SystemTrayEvent::LeftClick {
             position: _,
             size: _,
             ..
