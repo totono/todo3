@@ -18,6 +18,7 @@ type InputProps = {
 const { TextArea } = Input;
 
 const timeFormat = "HH:mm";
+const dateFormat = "MM/DD";
 
 const formStyle = css`
   display: flex;
@@ -133,6 +134,8 @@ export const InputProject = ({
     const date = task.date?.format("YYYY/MM/DD") ?? null;
     const time = task.time?.format("HH:mm") ?? null;
 
+
+
     const res: Model = await taskCommand.create(
       task.title,
       task.text,
@@ -149,6 +152,10 @@ export const InputProject = ({
     setFetch(true);
   };
 
+  const disabledTime = () => {
+    return {disabledHours: () => [0,1,2,3,4,5,6,7]}
+  };
+
   return (
     <div css={formStyle}>
       <DatePicker
@@ -156,6 +163,7 @@ export const InputProject = ({
         name="date"
         value={task.date}
         onChange={handleDateInput}
+        format={dateFormat}
       />
       <TimePicker
         css={Datetime}
@@ -163,7 +171,8 @@ export const InputProject = ({
         value={task.time}
         onSelect={handleTimeInput}
         onChange={handleTimeInput}
-        defaultValue={dayjs("10:00", timeFormat)}
+        disabledTime={disabledTime}
+        hideDisabledOptions={true}
         minuteStep={5}
         format={timeFormat}
       />
