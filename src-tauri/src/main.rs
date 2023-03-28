@@ -26,6 +26,16 @@ async fn initilize() -> store::AppState {
 fn main() {
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_single_instance::init(|app , _argv, _cwd|{
+            if let Some(window) = app.get_window("main"){
+                if let Err(e) = window.unminimize() {
+                    println!("failed to unminimize window: {e}");
+                }
+                if let Err(e) = window.set_focus() {
+                    println!("failed to set focus: {e}");
+                }
+            }
+        }))
         .system_tray(create_system_tray())
         .on_system_tray_event(system_tray_event)
         .setup(|app| {
