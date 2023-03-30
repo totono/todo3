@@ -2,13 +2,14 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import { css } from "@emotion/react";
 import { appWindow } from "@tauri-apps/api/window";
-import { Collapse } from "antd";
+import { Collapse, DatePicker } from "antd";
 import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { Children, Dispatch, SetStateAction, useState } from "react";
 import { Model } from "../bindings/tasks";
 import { taskCommand } from "../ipcs";
-import { CompleteCheck } from "./elements/Input/CompleteCheck";
+import { CompleteButton } from "./elements/Input/CompleteCheck";
+import { EditButton } from "./elements/Input/EditButton";
 dayjs.extend(isSameOrBefore);
 
 const { Panel } = Collapse;
@@ -90,6 +91,9 @@ const ListItem = (props: listItemProps) => {
 };
 
 const Header = (props: listItemProps) => {
+
+  const [isEditing, setIsEditing] = useState(false);
+
   const date = (limit_date: string | null) => {
     if (limit_date === null) {
       return "";
@@ -111,40 +115,55 @@ const Header = (props: listItemProps) => {
   };
 
   //期限切れの場合は、文字色を赤にする
-  const headerStyle = (isExpired: boolean) => {
+  const headerStyle = (isExpired: boolean, isEditing: boolean) => {
     return css`
       display: flex;
       align-items: center;
       text-align: left;
       color: ${isExpired ? "rgb(144, 29, 29)" : "white"};
 
-      button {
+      button{ 
         display: none;
-      }
-      :hover .ant-btn {
-        display: initial;
+        padding: auto;
         height: 20px;
+        font-size: 11px;
+      }
+
+      .anticon-edit{
+        display: ${isEditing ? "initial" : "none"};
+        padding-right: 20px;
+        margin-right: 0;
         margin-left: auto;
-        font-size: 10px;
+        font-size: 20px;
+        color: ${isEditing ? "rgb(144, 29, 29)" : "white"};
+
+      }
+
+      :hover .ant-btn, :hover .anticon{
+        display: initial;
       }
     `;
   };
 
+
+
+
   return (
     <div
-      css={headerStyle(isExpired(props.task.limit_date, props.task.limit_time))}
+      css={headerStyle(isExpired(props.task.limit_date, props.task.limit_time), isEditing)}
     >
-      <div>{date(props.task.limit_date)}</div>
+      {isEditing ? (<DatePicker value={dayjs(props.task.limit_date)}/>) : (<div>{date(props.task.limit_date)}</div>) }
       <div
         css={css`
           min-width: 50px;
           text-align: center;
         `}
       >
-        {props.task.limit_time}
+       {isEditing ? (<Tim)} {props.task.limit_time}
       </div>
       <div>{props.task.title}</div>
-      <CompleteCheck data={props.task.id} setFetch={props.setFetch} />
+      <EditButton isEditing={isEditing} setIsEditing={setIsEditing} />
+      <CompleteButton data={props.task.id} setFetch={props.setFetch} />
     </div>
   );
 };
