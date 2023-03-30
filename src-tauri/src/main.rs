@@ -9,6 +9,7 @@ use query::{task_list};
 use store::AppState;
 use system_tray::{create_system_tray, system_tray_event};
 use tauri::Manager;
+use tauri_plugin_window_state::{AppHandleExt, StateFlags};
 
 mod mutation;
 mod query;
@@ -45,12 +46,16 @@ fn main() {
             Ok(())
         })
         .on_window_event(|event| {
+            let window = event.window().get_window("main").expect("falied to get window");
             if let tauri::WindowEvent::CloseRequested { api, .. } = event.event() {
                 event.window().minimize().unwrap();
-                let window = event.window().get_window("main").expect("falied to get window");
                 window.set_skip_taskbar(true).unwrap();
                 api.prevent_close();
             }
+            if let tauri::WindowEvent::Resized(_) = event.event() {
+                let _ = event.window().app_handle().save_window_state(StateFlags::all());
+            }
+
         })
         .invoke_handler(tauri::generate_handler![
             task_list,
