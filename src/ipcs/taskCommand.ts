@@ -1,6 +1,8 @@
 import { Model } from "../bindings/tasks";
 import { invoke } from "@tauri-apps/api/tauri";
-import { CompleteStatus } from "../bindings/status/CompleteStatus";
+import { Completed } from "../bindings/status/CompleteStatus";
+import { ShouldNotify } from "../bindings/status/ShouldNotify";
+import { InputState } from "../components/elements/Input/InputState";
 
 const getTasks = async() : Promise<Model[]> => {
     return await invoke("task_list");
@@ -9,9 +11,9 @@ const getTasks = async() : Promise<Model[]> => {
 const create = async (
     title: string,
     text: string,
-    filePath: string | null,
-    limitDate: string | null,
-    limitTime: string | null,
+    filePath: string | undefined,
+    limitDate: string | undefined,
+    limitTime: string | undefined,
     ) => {
     let res:Model = await invoke(
       "create_task",
@@ -19,12 +21,44 @@ const create = async (
         title: title,
         text: text,
         filePath: "",
+        shouldNotify: "Yes",
         limitDate: limitDate,
         limitTime: limitTime,
       }
     )
     return res;
 }
+
+
+const updateText = async (
+    id: number,
+    text: string,
+) => {
+    let res:Model = await invoke(
+        "update_text",
+        {
+            id: id,
+            text: text,
+        }
+    );
+}
+
+const update = async (
+    task:InputState) => {
+    let res:Model = await invoke(
+        "update_task",
+        {
+            id: task.id,
+            title: task.title,
+            text: task.text,
+            filePath: "",
+            limitDate: task.limit_date,
+            limitTime: task.limit_time,
+            isCompleted: task.is_completed,
+        }
+    );
+}
+
 
 const setNotification = async (
     task:Model
@@ -37,7 +71,7 @@ const setNotification = async (
     console.log(`invoked set_notification, res is ${res}`)
 }
 
-const changeStatus = async (id: number, status: CompleteStatus) => {
+const setStatus = async (id: number, status: Completed) => {
     let e = await invoke(
         "complete_task",
     {
@@ -67,9 +101,11 @@ const physicalDelete = async (id:number) => {
 
 
 export const taskCommand = {
+    updateText,
+    update,
     getTasks,
     create,
-    changeStatus,
+    setStatus,
     setNotification,
     logicalDelete,
 } as const;

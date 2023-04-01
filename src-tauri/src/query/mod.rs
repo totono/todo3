@@ -1,4 +1,4 @@
-use ::entity::{status::CompleteStatus, status::DeleteStatus, tasks, tasks::Entity as Tasks};
+use ::entity::{status::Completed, status::Deleted, tasks, tasks::Entity as Tasks};
 use sea_orm::prelude::*;
 
 use crate::store::{AppState, State};

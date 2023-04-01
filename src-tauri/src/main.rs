@@ -63,6 +63,8 @@ fn main() {
             complete_task,
             logical_delete_task,
             physical_delete_task,
+            update_text,
+            update_task,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application")
