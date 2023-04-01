@@ -43,10 +43,10 @@ const resetTimer = (timerId: number, sorted: Model[]) => {
   return setInterval(notifier, 5000, sorted);
 };
 
-const isFuture = (date: string, time: string | null) => {
-  if (time == null) return false;
+const isFuture = (e: Model) => {
+  if (e.limit_time == null) return false;
 
-  const targetTime = dayjs(date + time);
+  const targetTime = dayjs(e.limit_date + " " + e.limit_time);
   const now = dayjs();
 
   console.log(now);
@@ -54,16 +54,35 @@ const isFuture = (date: string, time: string | null) => {
   return targetTime.isAfter(now);
 };
 
-const isDeltedOrCompleted = (e: Model) => {
-  return e.is_deleted === "Deleted" || e.is_completed === "Completed";
+const isDeletedOrCompleted = (e: Model) => {
+  return e.is_deleted === "Yes" || e.is_completed === "Yes";
 };
+
+const isToday = (notifyTime: Dayjs) => {
+  const today = dayjs(); 
+    return notifyTime.isSame(today, "day");
+};
+
+
+const shouldNotify = (e: Model) => {
+  
+  if (e.limit_time == null) return false;
+  if (e.is_deleted === "Yes") return false;
+  if (e.is_completed === "Yes") return false;
+  
+  const notifyTime = dayjs(e.limit_date + " " + e.limit_time);
+  const now = dayjs();
+  if (notifyTime.isBefore(now)) return false;
+  return isToday(notifyTime);
+};
+
+
 
 let timerId: number;
 
 export const setAlarm = (projects: Model[]) => {
   const filtered = projects.filter((obj) =>
-    isFuture(obj.limit_date!, obj.limit_time)
-    && !isDeltedOrCompleted(obj)
+    shouldNotify(obj)
   );
 
   if (filtered.length < 0) return;

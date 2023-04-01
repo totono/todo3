@@ -29,7 +29,7 @@ impl MigrationTrait for Migration {
                     )
                     .col(ColumnDef::new(Tasks::LimitDate).date_time())
                     .col(ColumnDef::new(Tasks::LimitTime).date_time())
-                    .col(ColumnDef::new(Tasks::ShouldNotify).integer())
+                    .col(ColumnDef::new(Tasks::ShouldNotify).integer().not_null())
                     .col(ColumnDef::new(Tasks::CompletedAt).date_time())
                     .col(ColumnDef::new(Tasks::CreateAt).date_time().not_null())
                     .col(ColumnDef::new(Tasks::UpdateAt).date_time().not_null())
