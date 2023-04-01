@@ -4,18 +4,15 @@ import { taskCommand } from "../../../ipcs";
 import { Button } from "antd";
 
 export const CompleteButton = (props: any) => {
-    const clickHandle = (e: any) => {
-      console.log(props.data);
+  const clickHandle = (_e: any) => {
+    console.log(props.data);
     taskCommand.setStatus(parseInt(props.data), "Yes");
     props.setFetch(true);
   };
 
   return (
-    <Button
-      value={props.data}
-      onClick={clickHandle}
-    >
-        Complete
+    <Button value={props.data} onClick={clickHandle}>
+      Complete
     </Button>
   );
 };

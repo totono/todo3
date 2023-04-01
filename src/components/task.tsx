@@ -8,7 +8,7 @@ import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { Children, Dispatch, SetStateAction, useState } from "react";
 import { Model } from "../bindings/tasks";
 import { taskCommand } from "../ipcs";
-import { CompleteButton } from "./elements/Input/CompleteCheck";
+import { CompleteButton } from "./elements/Input/CompleteButton";
 import { EditButton } from "./elements/Input/EditButton";
 dayjs.extend(isSameOrBefore);
 
@@ -148,6 +148,7 @@ const Header = (props: listItemProps) => {
 
 
 
+  //TODO!!!
   return (
     <div
       css={headerStyle(isExpired(props.task.limit_date, props.task.limit_time), isEditing)}
@@ -159,7 +160,7 @@ const Header = (props: listItemProps) => {
           text-align: center;
         `}
       >
-       {isEditing ? (<Tim)} {props.task.limit_time}
+       {props.task.limit_time}
       </div>
       <div>{props.task.title}</div>
       <EditButton isEditing={isEditing} setIsEditing={setIsEditing} />

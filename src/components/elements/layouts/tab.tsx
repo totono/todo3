@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Tabs } from 'antd';
-import TabPane from 'antd/es/tabs/TabPane';
 import { TaskList } from '../../task';
 import { Model } from '../../../bindings/tasks';
 
@@ -8,12 +7,11 @@ import { Model } from '../../../bindings/tasks';
 const filter = ['Incomplete','Complete','All','Deleted'];
 type Filter = typeof filter[number];
 interface TaskTab{
-    //filter: Filter;
     tasks: Model[];
     setFetch: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const filtering = (tasks: Model[], filter: Filter) => {
+const filterByStatus = (tasks: Model[], filter: Filter) => {
     switch (filter) {
         case 'Incomplete':
             return tasks.filter((task) => task.is_completed === 'No' && task.is_deleted === 'No');
@@ -33,21 +31,27 @@ export const TaskTab = (props: TaskTab) => {
     const [taskFilter, setFilter] = useState<Filter>('Incomplete');
 
     const handleFilter = (filter: Filter) => {
-        console.log(filter);
         setFilter(filter);
     }
 
-    const filterdTasks = filtering(props.tasks,taskFilter);
+    const filterdTasks = filterByStatus(props.tasks,taskFilter);
+
+    const items = filter.map((value) => {
+        return {
+            label: value,
+            key: value,
+            children: <TaskList tasks={filterdTasks} setFetch={props.setFetch} />,
+            };
+        }
+    )
 
     return (
-        <Tabs type='card' defaultActiveKey={taskFilter} onChange={handleFilter}>
-            {filter.map((value) => {
-                return (
-                    <TabPane tab={value} key={value}>
-                        <TaskList tasks={filterdTasks} setFetch={props.setFetch} />
-                    </TabPane>
-                );
-            })}
-        </Tabs>
-    );
+        <Tabs
+            type='card'
+            defaultActiveKey={taskFilter}
+            onChange={handleFilter}
+            items={items}
+        />
+    )
+
 }

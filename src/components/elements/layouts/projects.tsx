@@ -12,11 +12,12 @@ type ProjectProps = {
 };
 
 //limit_dateがnullの場合は3000/01/01とし、limit_timeがnullの場合は23:59とする。
-//taskのフィールドであるlimit_dateとlimit_timeで日時が最近の順にソートする。
+//taskのlimit_dateとlimit_timeで日時が最近の順にソートする。
 const byRecent = (a: Model, b: Model) => {
   const aDate = a.limit_date === null ? "3000/01/01" : a.limit_date;
-  const bDate = b.limit_date === null ? "3000/01/01" : b.limit_date;
   const aTime = a.limit_time === null ? "23:59" : a.limit_time;
+  
+  const bDate = b.limit_date === null ? "3000/01/01" : b.limit_date;
   const bTime = b.limit_time === null ? "23:59" : b.limit_time;
 
   const aDatetime = dayjs(aDate + aTime);

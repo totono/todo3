@@ -3,7 +3,7 @@ import { css, Global } from "@emotion/react";
 import { Header } from "./components/elements/layouts/header";
 import { Projects } from "./components/elements/layouts/projects";
 import { useState } from "react";
-import { InputProject } from "./components/elements/Input/InputProject"
+import { InputProject } from "./components/elements/Input/InputTask"
 import { ConfigProvider,theme } from 'antd'
 import { appWindow } from "@tauri-apps/api/window";
 
