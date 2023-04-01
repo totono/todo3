@@ -17,14 +17,14 @@ pub struct Model {
     pub text: Option<String>,
     pub file_path: Option<String>,
     pub completed_at: Option<String>,
-    pub is_completed: status::CompleteStatus,
+    pub is_completed: status::Completed,
     pub limit_date: Option<String>,
     pub limit_time: Option<String>,
-    pub should_notify: Option<i32>,
+    pub should_notify: status::ShouldNotify,
     pub create_at: String,
     pub update_at: Option<String>,
     pub deleted_at: Option<String>,
-    pub is_deleted: status::DeleteStatus,
+    pub is_deleted: status::Deleted,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]

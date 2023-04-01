@@ -1,12 +1,12 @@
 import { Model } from "../../../bindings/tasks";
-import { CompleteStatus } from "../../../bindings/status/CompleteStatus";
+import { Completed } from "../../../bindings/status/CompleteStatus";
 import { taskCommand } from "../../../ipcs";
 import { Button } from "antd";
 
-export const CompleteCheck = (props: any) => {
+export const CompleteButton = (props: any) => {
     const clickHandle = (e: any) => {
       console.log(props.data);
-    taskCommand.changeStatus(parseInt(props.data), "Completed");
+    taskCommand.setStatus(parseInt(props.data), "Yes");
     props.setFetch(true);
   };
 

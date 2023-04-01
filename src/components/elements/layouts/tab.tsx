@@ -16,13 +16,13 @@ interface TaskTab{
 const filtering = (tasks: Model[], filter: Filter) => {
     switch (filter) {
         case 'Incomplete':
-            return tasks.filter((task) => task.is_completed === 'NotComplete' && task.is_deleted === 'NotDelete');
+            return tasks.filter((task) => task.is_completed === 'No' && task.is_deleted === 'No');
         case 'Complete':
-            return tasks.filter((task) => task.is_completed === 'Completed' && task.is_deleted === 'NotDelete');
+            return tasks.filter((task) => task.is_completed === 'Yes' && task.is_deleted === 'No');
         case 'All':
-            return tasks.filter((task) => task.is_deleted === 'NotDelete');
+            return tasks.filter((task) => task.is_deleted === 'No');
         case 'Deleted':
-            return tasks.filter((task) => task.is_deleted === 'Deleted');
+            return tasks.filter((task) => task.is_deleted === 'Yes');
         default:
             return tasks;
     }

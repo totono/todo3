@@ -55,7 +55,7 @@ const isFuture = (e: Model) => {
 };
 
 const isDeletedOrCompleted = (e: Model) => {
-  return e.is_deleted === "Deleted" || e.is_completed === "Completed";
+  return e.is_deleted === "Yes" || e.is_completed === "Yes";
 };
 
 const isToday = (notifyTime: Dayjs) => {
@@ -67,8 +67,8 @@ const isToday = (notifyTime: Dayjs) => {
 const shouldNotify = (e: Model) => {
   
   if (e.limit_time == null) return false;
-  if (e.is_deleted === "Deleted") return false;
-  if (e.is_completed === "Completed") return false;
+  if (e.is_deleted === "Yes") return false;
+  if (e.is_completed === "Yes") return false;
   
   const notifyTime = dayjs(e.limit_date + " " + e.limit_time);
   const now = dayjs();

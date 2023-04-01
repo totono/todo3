@@ -1,4 +1,3 @@
-import { CompleteCheck } from "../Input/CompleteCheck";
 import { Model } from "../../../bindings/tasks";
 import { taskCommand } from "../../../ipcs";
 import { useState, useEffect } from "react";
