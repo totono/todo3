@@ -2,11 +2,11 @@ import { css } from '@emotion/react';
 
 
 export const dateTimeStyle = css`
-margin: 2px;
-padding: 0.3em 1em;
+width: 80px;
+padding-left: 6px;
+height: 21px;
 border-radius: 8px;
 border: 1px solid transparent;
-font-size: 1em;
 font-weight: 200;
 font-family: inherit;
 color: #282828;

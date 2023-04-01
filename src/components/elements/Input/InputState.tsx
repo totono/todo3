@@ -1,4 +1,5 @@
-import dayjs, { Dayjs } from "dayjs";
+import { Completed } from "../../../bindings/status/CompleteStatus";
+import { ShouldNotify } from "../../../bindings/status/ShouldNotify";
 
 
 const today = () => {
@@ -11,17 +12,24 @@ const today = () => {
   };
 
 export type InputState = {
+    id: number;
     title: string;
-    text: string;
-    date: Dayjs | null;
-    time: Dayjs | null;
-    filePath: string;
-}
+    text: string | undefined;
+    limit_date: string | undefined;
+    limit_time: string | undefined;
+    file_path: string | null;
+    should_notify: ShouldNotify;
+    is_completed: Completed;
+};
+
 
 export const initialState: InputState = {
+    id: 0,
     title: "",
     text: "",
-    date: dayjs(today(), "YYYY/MM/DD"),
-    time: null,
-    filePath: "",
-  };
+    limit_date: today(),
+    limit_time: undefined,
+    file_path: "",
+    should_notify: "Yes",
+    is_completed: "No",
+};

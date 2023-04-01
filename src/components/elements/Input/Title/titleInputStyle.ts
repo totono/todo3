@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 
 
 export const titleInputStyle = css`
-  width: 300px;
+  width: 250px;
   min-width: 20px;
   margin: 1px;
   padding: 0.2em 1em;

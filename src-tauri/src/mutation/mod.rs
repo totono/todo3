@@ -52,6 +52,26 @@ pub async fn update_notify_status(
     }
 }
 
+#[tauri::command(async)]
+pub async fn update_text(
+    state: State<'_>,
+    id: i32,
+    text: String,
+) -> Result<tasks::Model, String> {
+    let db = state.db.clone();
+
+    let task = tasks::ActiveModel {
+        id: Set(id),
+        text: Set(Some(text)),
+        ..Default::default()
+    };
+
+    match task.update(&*db).await {
+        Ok(v) => Ok(v),
+        Err(e) => Err(format!("{e:?}")),
+    }
+}
+
 
 #[tauri::command(async)]
 pub async fn update_task(
@@ -62,6 +82,7 @@ pub async fn update_task(
     limit_time: Option<String>,
     text: Option<String>,
     file_path: Option<String>,
+    is_completed: Completed,
 ) -> Result<tasks::Model, String> {
     let db = state.db.clone();
 
@@ -72,6 +93,7 @@ pub async fn update_task(
         file_path: Set(file_path),
         limit_date: Set(Some(limit_date)),
         limit_time: Set(limit_time),
+        is_completed: Set(is_completed),
         ..Default::default()
     };
 

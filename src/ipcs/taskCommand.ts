@@ -2,6 +2,7 @@ import { Model } from "../bindings/tasks";
 import { invoke } from "@tauri-apps/api/tauri";
 import { Completed } from "../bindings/status/CompleteStatus";
 import { ShouldNotify } from "../bindings/status/ShouldNotify";
+import { InputState } from "../components/elements/Input/InputState";
 
 const getTasks = async() : Promise<Model[]> => {
     return await invoke("task_list");
@@ -10,9 +11,9 @@ const getTasks = async() : Promise<Model[]> => {
 const create = async (
     title: string,
     text: string,
-    filePath: string | null,
-    limitDate: string | null,
-    limitTime: string | null,
+    filePath: string | undefined,
+    limitDate: string | undefined,
+    limitTime: string | undefined,
     ) => {
     let res:Model = await invoke(
       "create_task",
@@ -28,23 +29,32 @@ const create = async (
     return res;
 }
 
-const update = async (
+
+const updateText = async (
     id: number,
-    title: string,
     text: string,
-    filePath: string | null,
-    limitDate: string | null,
-    limitTime: string | null,
-    ) => {
+) => {
+    let res:Model = await invoke(
+        "update_text",
+        {
+            id: id,
+            text: text,
+        }
+    );
+}
+
+const update = async (
+    task:InputState) => {
     let res:Model = await invoke(
         "update_task",
         {
-            id: id,
-            title: title,
-            text: text,
+            id: task.id,
+            title: task.title,
+            text: task.text,
             filePath: "",
-            limitDate: limitDate,
-            limitTime: limitTime,
+            limitDate: task.limit_date,
+            limitTime: task.limit_time,
+            isCompleted: task.is_completed,
         }
     );
 }
@@ -91,6 +101,8 @@ const physicalDelete = async (id:number) => {
 
 
 export const taskCommand = {
+    updateText,
+    update,
     getTasks,
     create,
     setStatus,

@@ -1,5 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import { EditOutlined } from "@ant-design/icons";
-import { taskCommand } from "../../../ipcs";
+import { taskCommand } from "../../../../../ipcs";
+import { deleteButtonStyle, editButtonStyle } from "./buttonStyle";
 
 type EditButtonProps  = {
     isEditing: boolean;
@@ -14,5 +16,8 @@ export const EditButton = ({setIsEditing,isEditing}:EditButtonProps) => {
         setIsEditing(!isEditing);
     }
     
-  return <EditOutlined onClick={handleClick}/>;
+  return <EditOutlined
+    css={editButtonStyle(isEditing)}
+    onClick={handleClick}
+    />;
 };

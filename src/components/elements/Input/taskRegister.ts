@@ -5,15 +5,16 @@ import { InputState } from "./InputState";
 
 
 export const taskRegister = async (task:InputState) => {
-    const date = task.date?.format("YYYY/MM/DD") ?? null;
-    const time = task.time?.format("HH:mm") ?? null;
+    //const date = task.limit_date?.format("YYYY/MM/DD") ?? null;
+    //const time = task.limit_time?.format("HH:mm") ?? null;
+    const text = task.text === null ? "" : task.text;
 
     const res: Model = await taskCommand.create(
         task.title,
-        task.text,
+        text,
         null,
-        date,
-        time,
+        (task.limit_date)?.toString() ?? null,
+        (task.limit_time)?.toString() ?? null,
     );
     return res;
 }

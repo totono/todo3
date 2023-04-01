@@ -3,4 +3,4 @@ import type { Completed } from ".\\status\\CompleteStatus";
 import type { Deleted } from ".\\status\\DeleteStatus";
 import type { ShouldNotify } from ".\\status\\ShouldNotify";
 
-export interface Model { id: number, title: string, text: string | null, file_path: string | null, completed_at: string | null, is_completed: Completed, limit_date: string | null, limit_time: string | null, should_notify: ShouldNotify | null, create_at: string, update_at: string | null, deleted_at: string | null, is_deleted: Deleted, }
+export interface Model { id: number, title: string, text: string | undefined, file_path: string | null, completed_at: string | null, is_completed: Completed, limit_date: string | undefined, limit_time: string | undefined, should_notify: ShouldNotify, create_at: string, update_at: string | null, deleted_at: string | null, is_deleted: Deleted, }

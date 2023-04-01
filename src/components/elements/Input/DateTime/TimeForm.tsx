@@ -1,9 +1,14 @@
+/** @jsxImportSource @emotion/react */
 import { TimePicker } from "antd"
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { Dispatch, SetStateAction, useState } from "react";
+import * as objectSupport from "dayjs/plugin/objectSupport";
+import { Model } from "../../../../bindings/tasks";
 import { InputState } from "../InputState";
 import { dateTimeStyle } from "./dateTimeStyle";
 
+
+dayjs.extend(objectSupport);
 
 
 const timeFormat = "HH:mm";
@@ -14,23 +19,32 @@ const disabledTime = () => {
 type TimeFormProps = {
     task: InputState;
     setTask: Dispatch<SetStateAction<InputState>>;
-    value: Dayjs | null;
+    value: string | undefined;
 }
 
 
 export const TimeForm = ({task,setTask,value}:TimeFormProps) => {
 
+    console.log("TimeForm");
+    console.log(value);
+
+    const hour = value ? parseInt(value.split(":")[0]) : undefined;
+    const minute = value ? parseInt(value.split(":")[1]) : undefined;
+
+    const time = value ? dayjs({hour:hour, minute:minute}) : undefined;
+
     const handleTimeInput = (time: Dayjs | null) => {
         console.log("task set");
-        setTask({ ...task, time: time });
-        console.log(task);
+        console.log(time?.format(timeFormat));
+        setTask({ ...task, limit_time: time?.format(timeFormat) ?? undefined });
+        //console.log(task);
       };
 
     return (
         <TimePicker
             css = {dateTimeStyle}
             name="time"
-            value={value}
+            value={time}
             onSelect={handleTimeInput}
             onChange={handleTimeInput}
             disabledTime={disabledTime}

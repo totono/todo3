@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Tabs } from 'antd';
-import { TaskList } from '../../task';
 import { Model } from '../../../bindings/tasks';
+import { TaskList } from './taskItem/TaskList';
 
 
 const filter = ['Incomplete','Complete','All','Deleted'];

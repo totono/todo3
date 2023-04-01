@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css, Global } from "@emotion/react";
 import { Header } from "./components/elements/layouts/header";
-import { Projects } from "./components/elements/layouts/projects";
+import { Tasks } from "./components/elements/layouts/projects";
 import { useState } from "react";
-import { InputProject } from "./components/elements/Input/InputTask"
 import { ConfigProvider,theme } from 'antd'
 import { appWindow } from "@tauri-apps/api/window";
 
@@ -61,7 +60,7 @@ function App() {
         fetch={fetch}
         setFetch={setFetch}/>
     <ul css={css`padding-left:0;`}>
-      <Projects
+      <Tasks
         fetch={fetch}
         setFetch={setFetch}
        />

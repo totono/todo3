@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { DatePicker} from "antd";
 import { Dayjs } from "dayjs";
 import { Dispatch, SetStateAction } from "react";
@@ -12,12 +13,12 @@ type DateFormProps = {
 }
 
 
-const dateFormat = "MM/DD";
+const dateFormat = "YYYY/MM/DD";
 
 export const DateForm = ({task,setTask,value}:DateFormProps) => {
 
     const handleDateInput = (date: Dayjs | null) => {
-        setTask({ ...task, date: date });
+        setTask({ ...task, limit_date: date?.format(dateFormat) ?? undefined });
       };
 
     return (
@@ -26,7 +27,7 @@ export const DateForm = ({task,setTask,value}:DateFormProps) => {
             name="date"
             value={value}
             onChange={handleDateInput}
-            format={dateFormat}
+            format={"MM/DD"}
         />
     )
 }
