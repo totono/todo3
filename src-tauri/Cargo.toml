@@ -15,7 +15,7 @@ tauri-build = { version = "1.2", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.2", features = ["notification-all", "shell-open", "system-tray", "window-minimize", "window-request-user-attention", "window-set-skip-taskbar", "window-show", "window-unminimize"] }
+tauri = { version = "1.2", features = ["notification-all", "shell-open", "system-tray", "updater", "window-minimize", "window-request-user-attention", "window-set-skip-taskbar", "window-show", "window-unminimize"] }
 thiserror = "1.0.38"
 tokio = { version = "1.25.0", features = ["full"] }
 sea-orm = { version = "0.11.0", features = ["runtime-tokio-rustls", "macros", "sqlx-sqlite"] }
