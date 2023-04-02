@@ -19,6 +19,8 @@ const isPlayAlarmTime = (time: string) => {
   return dayjs().format("HH:mm") === time;
 };
 
+// 通知を送る
+// FIXME通知を送ったらコンポーネントの再レンダリングしたい
 const notify = (el: Model) => {
   sendNotification({
     title: "セットしたタスクの時間です",
@@ -26,6 +28,11 @@ const notify = (el: Model) => {
   });
   appWindow.setSkipTaskbar(false);
   appWindow.requestUserAttention(UserAttentionType.Critical);
+  //FIXME: ここでリロードするのは違う。他の方法がほしい
+  window.location.reload();
+
+
+
 };
 
 const notifier = (e: Model[]) => {
@@ -43,20 +50,6 @@ const resetTimer = (timerId: number, sorted: Model[]) => {
   return setInterval(notifier, 5000, sorted);
 };
 
-const isFuture = (e: Model) => {
-  if (e.limit_time == null) return false;
-
-  const targetTime = dayjs(e.limit_date + " " + e.limit_time);
-  const now = dayjs();
-
-  console.log(now);
-
-  return targetTime.isAfter(now);
-};
-
-const isDeletedOrCompleted = (e: Model) => {
-  return e.is_deleted === "Yes" || e.is_completed === "Yes";
-};
 
 const isToday = (notifyTime: Dayjs) => {
   const today = dayjs(); 
@@ -81,6 +74,7 @@ const shouldNotify = (e: Model) => {
 let timerId: number;
 
 export const setAlarm = (projects: Model[]) => {
+  
   const filtered = projects.filter((obj) =>
     shouldNotify(obj)
   );

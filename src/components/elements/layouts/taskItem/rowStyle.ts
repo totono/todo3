@@ -17,13 +17,14 @@ const date = (state:InputState) => {
   const time = state.limit_time == null ? "23:59" : state.limit_time;
   const limit = dayjs(date + " " + time);
   const now = dayjs();
-  if (limit.isSame(now, "day")) {
-    return "today";
-  } else if (limit.isBefore(now) && state.should_notify == "Yes") {
+
+  if (limit.isBefore(now) && state.should_notify == "Yes") {
     return "overdue";
   } else if (limit.isBefore(now) && state.should_notify == "No") {
     return "before";
-  } 
+  }  else if (limit.isSame(now, "day")) {
+    return "today";
+  }
   return "after";
   
 };
