@@ -26,6 +26,7 @@ export const Row = ({ task, setFetch }: rowProps) => {
     should_notify,
     file_path,
     is_completed,
+    is_deleted,
   }) => ({
     id,
     title,
@@ -35,11 +36,12 @@ export const Row = ({ task, setFetch }: rowProps) => {
     should_notify,
     file_path,
     is_completed,
+    is_deleted,
   }))(task);
   const [taskState, setTaskState] = useState(state);
 
   return (
-    <li css={listItemStyle(task.limit_date, task.limit_time)}>
+    <li css={listItemStyle(state)}>
       <Collapse>
         <Panel
           key="taskHeader"

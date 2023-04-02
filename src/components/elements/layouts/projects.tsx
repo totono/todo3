@@ -35,6 +35,7 @@ export const Tasks = ({ fetch, setFetch }: ProjectProps): JSX.Element => {
       setTasks(sortedRes);
       setAlarm(sortedRes);
       setFetch(false);
+      console.log(sortedRes);
     };
     fetchData();
   }, [fetch]);
