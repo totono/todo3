@@ -1,4 +1,5 @@
 import { Completed } from "../../../bindings/status/CompleteStatus";
+import { Deleted } from "../../../bindings/status/DeleteStatus";
 import { ShouldNotify } from "../../../bindings/status/ShouldNotify";
 
 
@@ -20,6 +21,7 @@ export type InputState = {
     file_path: string | null;
     should_notify: ShouldNotify;
     is_completed: Completed;
+    is_deleted: Deleted;
 };
 
 
@@ -32,4 +34,5 @@ export const initialState: InputState = {
     file_path: "",
     should_notify: "Yes",
     is_completed: "No",
+    is_deleted: "No",
 };
