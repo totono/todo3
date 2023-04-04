@@ -46,6 +46,9 @@ jobs:
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
-      - name: Post updater.json to gists
-        run: |
-          curl.exe --request PATCH --header 'content-type: application/json' --header 'Accept : application/vnd.github+json' --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' --url https://api.github.com/gists/f56ab876e3bbcc0e26018aee398d954a --data @D:\a\todo3\todo3\latest.json
+      - name: Deploy to Gist
+        uses: exuanbo/actions-deploy-gist@v1.1.4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          gist_id: f56ab876e3bbcc0e26018aee398d954a
+          file_path: D:\a\todo3\todo3\latest.json
