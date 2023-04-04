@@ -23,19 +23,15 @@ jobs:
           node-version: 16
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
-      - name: install frontend dependencies
-        run: npm install # change this to npm or pnpm depending on which one you use
-      - name: Restore Cargo dependencies
-        uses: actions/cache@v3
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
         with:
-          path: |
-            ~/src-tauri/.cargo/bin/
-            ~/src-tauri/.cargo/registry/index/
-            ~/src-tauri/.cargo/registry/cache/
-            ~/src-tauri/.cargo/git/db/
-            ~/src-tauri/target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('src-tauri/Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-cargo-
+          workspaces: './src-tauri -> target'
+      - name: Sync node version and setup cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'npm' # Set this to npm, yarn or pnpm.
       - uses: tauri-apps/tauri-action@dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
