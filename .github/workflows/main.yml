@@ -48,7 +48,7 @@ jobs:
           prerelease: false
       - name: Post updater.json to gists
         run: |
-            curl -L \
+            curl.exe -L \
             -X PATCH \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}"\
