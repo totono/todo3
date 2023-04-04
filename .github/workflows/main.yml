@@ -32,6 +32,9 @@ jobs:
         with:
           node-version: 'lts/*'
           cache: 'npm' # Set this to npm, yarn or pnpm.
+      - name: Install frontend dependencies
+        # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
+        run: npm install # Change this to npm, yarn or pnpm.
       - uses: tauri-apps/tauri-action@dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
