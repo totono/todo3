@@ -46,3 +46,13 @@ jobs:
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
+      - name: Post updater.json to gists
+        run: |
+            curl -L \
+            -X PATCH \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}"\
+            https://api.github.com/gists/f56ab876e3bbcc0e26018aee398d954a \
+            -d @D:\a\todo3\todo3\latest.json
+
+      
