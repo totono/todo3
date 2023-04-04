@@ -51,4 +51,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           gist_id: f56ab876e3bbcc0e26018aee398d954a
-          file_path: todo3\latest.json
+          file_path: latest.json
