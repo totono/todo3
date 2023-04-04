@@ -50,6 +50,6 @@ jobs:
       - name: Deploy to Gist
         uses: exuanbo/actions-deploy-gist@v1.1.4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PRIVATE_TOKEN }}
           gist_id: f56ab876e3bbcc0e26018aee398d954a
           file_path: latest.json
