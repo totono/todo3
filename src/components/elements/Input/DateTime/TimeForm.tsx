@@ -2,7 +2,7 @@
 import { TimePicker } from "antd"
 import dayjs, { Dayjs } from "dayjs";
 import { Dispatch, SetStateAction, useState } from "react";
-import * as objectSupport from "dayjs/plugin/objectSupport";
+import objectSupport from "dayjs/plugin/objectSupport";
 import { Model } from "../../../../bindings/tasks";
 import { InputState } from "../InputState";
 import { dateTimeStyle } from "./dateTimeStyle";
