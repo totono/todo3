@@ -51,5 +51,5 @@ jobs:
         uses: exuanbo/actions-deploy-gist@v1.1.4
         with:
           token: ${{ secrets.PRIVATE_TOKEN }}
-          gist_id: f56ab876e3bbcc0e26018aee398d954a
+          gist_id: c8e74bfefabed4c9aa63b014126b5fd5
           file_path: latest.json
