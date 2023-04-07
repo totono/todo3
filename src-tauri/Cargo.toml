@@ -1,8 +1,8 @@
 [package]
 name = "todo"
-version = "0.4.0"
+version = "0.4.2"
 description = "todo"
-authors = ["you"]
+authors = ["totono"]
 license = ""
 repository = ""
 edition = "2021"

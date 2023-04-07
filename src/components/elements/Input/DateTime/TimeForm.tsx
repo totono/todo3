@@ -2,7 +2,7 @@
 import { TimePicker } from "antd"
 import dayjs, { Dayjs } from "dayjs";
 import { Dispatch, SetStateAction, useState } from "react";
-import * as objectSupport from "dayjs/plugin/objectSupport";
+import objectSupport from "dayjs/plugin/objectSupport";
 import { Model } from "../../../../bindings/tasks";
 import { InputState } from "../InputState";
 import { dateTimeStyle } from "./dateTimeStyle";
@@ -12,9 +12,9 @@ dayjs.extend(objectSupport);
 
 
 const timeFormat = "HH:mm";
-const disabledTime = () => {
-    return { disabledHours: () => [0, 1, 2, 3, 4, 5, 6, 7] }
-};
+//const disabledTime = () => {
+//    return { disabledHours: () => [0, 1, 2, 3, 4, 5, 6, 7] }
+//};
 
 type TimeFormProps = {
     task: InputState;
@@ -47,7 +47,6 @@ export const TimeForm = ({task,setTask,value}:TimeFormProps) => {
             value={time}
             onSelect={handleTimeInput}
             onChange={handleTimeInput}
-            disabledTime={disabledTime}
             hideDisabledOptions={true}
             minuteStep={5}
             format={timeFormat}
