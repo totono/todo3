@@ -36,8 +36,8 @@ return (
 const isFuture = (task:InputState) => {
     if (task.limit_date == undefined) {return "No"}
 
-    let time = ""
-    if (task.limit_time == undefined) { time = "23:59"}
+    let time = task.limit_time;
+    if (task.limit_time == undefined) { time = "23:59"};
     const now = dayjs();
     const limit = dayjs(task.limit_date +" "+ time);
     if (now.isBefore(limit)){
